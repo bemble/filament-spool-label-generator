@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Filament Label Generator</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5.5,2C3.56,2 2,3.56 2,5.5V18.5C2,20.44 3.56,22 5.5,22H16L22,16V5.5C22,3.56 20.44,2 18.5,2H5.5M5.75,4H18.25A1.75,1.75 0 0,1 20,5.75V15H18.5C16.56,15 15,16.56 15,18.5V20H5.75A1.75,1.75 0 0,1 4,18.25V5.75A1.75,1.75 0 0,1 5.75,4M14.44,6.77C14.28,6.77 14.12,6.79 13.97,6.83C13.03,7.09 12.5,8.05 12.74,9C12.79,9.15 12.86,9.3 12.95,9.44L16.18,8.56C16.18,8.39 16.16,8.22 16.12,8.05C15.91,7.3 15.22,6.77 14.44,6.77M8.17,8.5C8,8.5 7.85,8.5 7.7,8.55C6.77,8.81 6.22,9.77 6.47,10.7C6.5,10.86 6.59,11 6.68,11.16L9.91,10.28C9.91,10.11 9.89,9.94 9.85,9.78C9.64,9 8.95,8.5 8.17,8.5M16.72,11.26L7.59,13.77C8.91,15.3 11,15.94 12.95,15.41C14.9,14.87 16.36,13.25 16.72,11.26Z'/></svg>" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5.5,2C3.56,2 2,3.56 2,5.5V18.5C2,20.44 3.56,22 5.5,22H16L22,16V5.5C22,3.56 20.44,2 18.5,2H5.5M5.75,4H18.25A1.75,1.75 0 0,1 20,5.75V15H18.5C16.56,15 15,16.56 15,18.5V20H5.75A1.75,1.75 0 0,1 4,18.25V5.75A1.75,1.75 0 0,1 5.75,4M14.44,6.77C14.28,6.77 14.12,6.79 13.97,6.83C13.03,7.09 12.5,8.05 12.74,9C12.79,9.15 12.86,9.3 12.95,9.44L16.18,8.56C16.18,8.39 16.16,8.22 16.12,8.05C15.91,7.3 15.22,6.77 14.44,6.77M8.17,8.5C8,8.5 7.85,8.5 7.7,8.55C6.77,8.81 6.22,9.77 6.47,10.7C6.5,10.86 6.59,11 6.68,11.16L9.91,10.28C9.91,10.11 9.89,9.94 9.85,9.78C9.64,9 8.95,8.5 8.17,8.5M16.72,11.26L7.59,13.77C8.91,15.3 11,15.94 12.95,15.41C14.9,14.87 16.36,13.25 16.72,11.26Z'/></svg>"
+    />
     <style>
       *,
       *::before,
@@ -147,14 +150,70 @@
 
     <div id="screen-select" style="display: none">
       <h1>Filament Label Generator</h1>
-      <select id="brand-select" class="select-input" onchange="onBrandChange()"></select>
-      <img id="label-preview" alt="Label preview" style="max-width:320px;width:100%;display:none" />
-      <p id="material-label" style="display:none">Select a material to generate printable labels.</p>
-      <select id="material-select" class="select-input" style="display:none"></select>
-      <button class="btn" id="generate-btn" onclick="generate()" style="display:none">Generate Labels</button>
-      <p style="font-size:0.85rem;color:#888;display:none" id="credits"></p>
-      <a href="https://github.com/bemble/filament-spool-label-generator" target="_blank" rel="noopener" style="color:#888;display:flex;align-items:center;gap:6px;font-size:0.85rem;text-decoration:none" onmouseover="this.style.color='#111'" onmouseout="this.style.color='#888'">
-        <svg width="16" height="16" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="currentColor"/></svg>
+      <select
+        id="brand-select"
+        class="select-input"
+        onchange="onBrandChange()"
+      ></select>
+      <select
+        id="template-select"
+        class="select-input"
+        style="display: none"
+        onchange="onTemplateChange()"
+      ></select>
+      <img
+        id="label-preview"
+        alt="Label preview"
+        style="max-width: 320px; width: 100%; display: none"
+      />
+      <p id="material-label" style="display: none">
+        Select a material to generate printable labels.
+      </p>
+      <select
+        id="material-select"
+        class="select-input"
+        style="display: none"
+      ></select>
+      <button
+        class="btn"
+        id="generate-btn"
+        onclick="generate()"
+        style="display: none"
+      >
+        Generate Labels
+      </button>
+      <p
+        style="font-size: 0.85rem; color: #888; display: none"
+        id="credits"
+      ></p>
+      <a
+        href="https://github.com/bemble/filament-spool-label-generator"
+        target="_blank"
+        rel="noopener"
+        style="
+          color: #888;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.85rem;
+          text-decoration: none;
+        "
+        onmouseover="this.style.color = '#111'"
+        onmouseout="this.style.color = '#888'"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 98 96"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+            fill="currentColor"
+          />
+        </svg>
         bemble/filament-spool-label-generator
       </a>
     </div>
@@ -169,22 +228,21 @@
     </div>
 
     <script>
-      const BRANDS = [
-        {
-          id: "bambulab",
-          name: "Bambu Lab",
-          templateUrl: "./label-bambulab-default.svg",
-          dataUrl: "https://raw.githubusercontent.com/piitaya/bambu-spoolman-db/main/filaments.json",
-          credits: {
-            label: "piitaya",
-            url: "https://github.com/piitaya/bambu-spoolman-db",
-          },
-        },
-      ];
+      let BRANDS = [];
 
       let filaments = [];
       let svgTemplate = "";
       let currentBrand = null;
+
+      function currentTemplateUrl() {
+        const templateId = document.getElementById("template-select").value;
+        return currentBrand.templates.find((t) => t.id === templateId).url;
+      }
+
+      function onTemplateChange() {
+        svgTemplate = "";
+        document.getElementById("label-preview").src = currentTemplateUrl();
+      }
 
       async function onBrandChange() {
         const brandId = document.getElementById("brand-select").value;
@@ -192,16 +250,34 @@
         svgTemplate = "";
 
         const show = (id) => (document.getElementById(id).style.display = "");
-        const hide = (id) => (document.getElementById(id).style.display = "none");
+        const hide = (id) =>
+          (document.getElementById(id).style.display = "none");
 
         if (!currentBrand) {
-          ["label-preview", "material-label", "material-select", "generate-btn", "credits"].forEach(hide);
+          [
+            "template-select",
+            "label-preview",
+            "material-label",
+            "material-select",
+            "generate-btn",
+            "credits",
+          ].forEach(hide);
           return;
         }
 
+        const templateSelect = document.getElementById("template-select");
+        templateSelect.innerHTML = "";
+        for (const t of currentBrand.templates) {
+          const opt = document.createElement("option");
+          opt.value = t.id;
+          opt.textContent = t.name;
+          templateSelect.appendChild(opt);
+        }
+        show("template-select");
+
         ["label-preview", "material-label", "credits"].forEach(show);
 
-        document.getElementById("label-preview").src = currentBrand.templateUrl;
+        document.getElementById("label-preview").src = currentBrand.templates[0].url;
 
         const credits = document.getElementById("credits");
         credits.innerHTML = `Filament database by <a href="${currentBrand.credits.url}" target="_blank" rel="noopener">${currentBrand.credits.label}</a> — thanks!`;
@@ -230,6 +306,8 @@
       }
 
       async function init() {
+        BRANDS = await fetch("./list.json").then((r) => r.json());
+
         const brandSelect = document.getElementById("brand-select");
         const placeholder = document.createElement("option");
         placeholder.value = "";
@@ -254,7 +332,7 @@
 
         const q = (label) => doc.querySelector(`[data-label="${label}"]`);
 
-        q("material").textContent = filament.material;
+        q("material").textContent = filament.material.replace(/\s*[\(\[].*?[\)\]]/g, "").trim();
 
         const badge = q("color_badge");
         badge.style.fill = `#${filament.color_hex}`;
@@ -271,7 +349,7 @@
 
       async function generate() {
         if (!svgTemplate) {
-          svgTemplate = await fetch(currentBrand.templateUrl).then((r) => r.text());
+          svgTemplate = await fetch(currentTemplateUrl()).then((r) => r.text());
         }
         const val = document.getElementById("material-select").value;
         const filtered =

@@ -179,13 +179,13 @@ async function generate() {
   const total = document.querySelectorAll("#material-select .material-cb").length;
   const label = selected.size === total ? "All materials"
     : selected.size === 1 ? [...selected][0]
-    : `${selected.size} materials`;
+      : `${selected.size} materials`;
   document.getElementById("toolbar-title").textContent =
-    `${currentFilamentMaker.name} — ${label} — ${filtered.length} label${filtered.length !== 1 ? "s" : ""}`;
+    `${currentFilamentMaker.name} - ${label} - ${filtered.length} label${filtered.length !== 1 ? "s" : ""}`;
 
   document.getElementById("screen-select").style.display = "none";
   document.getElementById("screen-labels").style.display = "block";
-  history.pushState({ screen: "labels" }, "", "generation");
+  history.pushState({ screen: "labels" }, "", "generation.html");
 }
 
 function buildMaterialChecklist(container, groups, sortedGroups) {
@@ -288,7 +288,7 @@ function back() {
 }
 
 function goHome() {
-  if (window.location.pathname.endsWith("/generation")) back();
+  if (window.location.pathname.endsWith("/generation.html")) back();
 }
 
 function showSelect() {
@@ -302,7 +302,7 @@ function showLabels() {
 }
 
 window.addEventListener("popstate", () => {
-  if (window.location.pathname.endsWith("/generation")) showLabels();
+  if (window.location.pathname.endsWith("/generation.html")) showLabels();
   else showSelect();
 });
 

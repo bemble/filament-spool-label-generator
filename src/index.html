@@ -117,7 +117,12 @@
 
     <div id="screen-labels">
       <div class="toolbar no-print">
-        <h2 id="toolbar-title"></h2>
+        <div class="toolbar-title-row">
+          <button onclick="back()" class="toolbar-back-btn" title="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/></svg>
+          </button>
+          <h2 id="toolbar-title"></h2>
+        </div>
         <span id="selection-count" style="display: none; font-size: 0.85rem; color: #555; white-space: nowrap"></span>
         <button class="btn secondary" id="selection-btn" onclick="toggleSelectionMode()">Selection</button>
         <button class="btn" onclick="window.print()">Print</button>

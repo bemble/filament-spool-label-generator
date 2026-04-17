@@ -162,15 +162,39 @@ body {
   border-radius: 4px;
   border: 2px solid #00ae42;
   pointer-events: none;
-  transition: opacity 0.15s;
+  transition: border-color 0.15s;
 }
 
 #labels-grid.selection-mode .label-wrapper.excluded::after {
-  border-color: transparent;
+  border-color: #e0e0e0;
+}
+
+#labels-grid.selection-mode .label-wrapper::before {
+  content: "✓";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #00ae42;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  transition: background 0.15s;
+}
+
+#labels-grid.selection-mode .label-wrapper.excluded::before {
+  background: #ccc;
 }
 
 .label-wrapper.excluded svg {
-  opacity: 0.2;
+  opacity: 0.25;
   filter: grayscale(1);
   transition: opacity 0.15s, filter 0.15s;
 }

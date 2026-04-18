@@ -1,15 +1,60 @@
-[
-  {
-    "id": "bambulab",
-    "name": "Bambu Lab",
-    "dataUrl": "https://raw.githubusercontent.com/piitaya/bambu-spoolman-db/main/filaments.json",
+{
+  "spoolman-db": {
+    "dataUrl": "https://raw.githubusercontent.com/Donkie/SpoolmanDB/refs/heads/main/filaments/{id}.json",
     "credits": {
-      "label": "piitaya",
-      "url": "https://github.com/piitaya/bambu-spoolman-db"
+      "label": "Donkie",
+      "url": "https://github.com/Donkie/SpoolmanDB"
     },
+    "manufacturers_enabled": [
+      {
+        "id": "esun",
+        "name": "eSun"
+      },
+      {
+        "id": "AmazonBasics",
+        "name": "Amazon Basics"
+      },
+      "sunlu",
+      "polymaker",
+      "anycubic",
+      "creality",
+      "jayo",
+      "prusament"
+    ],
     "templates": [
-      { "id": "default", "name": "Default", "url": "./templates/label-bambulab-default.svg" },
-      { "id": "color-left", "name": "Color left", "url": "./templates/label-bambulab-color-left.svg" }
+      {
+        "id": "default",
+        "name": "Default",
+        "url": "./templates/label-spoolman-default.svg"
+      },
+      {
+        "id": "pill",
+        "name": "Pill",
+        "url": "./templates/label-spoolman-pill.svg"
+      }
     ]
-  }
-]
+  },
+  "custom": [
+    {
+      "id": "bambulab",
+      "name": "Bambu Lab",
+      "dataUrl": "https://raw.githubusercontent.com/piitaya/bambu-spoolman-db/main/filaments.json",
+      "credits": {
+        "label": "piitaya",
+        "url": "https://github.com/piitaya/bambu-spoolman-db"
+      },
+      "templates": [
+        {
+          "id": "default",
+          "name": "Default",
+          "url": "./templates/label-bambulab-default.svg"
+        },
+        {
+          "id": "color-left",
+          "name": "Color left",
+          "url": "./templates/label-bambulab-color-left.svg"
+        }
+      ]
+    }
+  ]
+}

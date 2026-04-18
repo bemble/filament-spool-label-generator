@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Filament Label Generator</title>
     <link
       rel="icon"
@@ -15,7 +18,20 @@
     <div id="loading">Loading…</div>
 
     <div id="app-bar">
-      <button onclick="goHome()" style="background:none;border:none;cursor:pointer;color:inherit;display:flex;align-items:center;gap:12px;padding:0;font:inherit">
+      <button
+        onclick="goHome()"
+        style="
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: inherit;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 0;
+          font: inherit;
+        "
+      >
         <svg
           width="24"
           height="24"
@@ -62,74 +78,209 @@
     </div>
 
     <div id="screen-select" style="display: none">
-
       <section class="config-section">
         <h2 class="section-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18,15H16V17H18M18,11H16V13H18M20,19H12V17H14V15H12V13H14V11H12V9H20M10,7H8V5H10M10,11H8V9H10M10,15H8V13H10M10,19H8V17H10M6,7H4V5H6M6,11H4V9H6M6,15H4V13H6M6,19H4V17H6M12,7V3H2V21H22V7H12Z"/></svg>
-          Filament maker
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M18,15H16V17H18M18,11H16V13H18M20,19H12V17H14V15H12V13H14V11H12V9H20M10,7H8V5H10M10,11H8V9H10M10,15H8V13H10M10,19H8V17H10M6,7H4V5H6M6,11H4V9H6M6,15H4V13H6M6,19H4V17H6M12,7V3H2V21H22V7H12Z"
+            />
+          </svg>
+          Manufacturer
         </h2>
-        <select id="filament-maker-select" class="select-input" onchange="onFilamentMakerChange()"></select>
-        <p id="credits" style="display: none; font-size: 0.85rem; color: #888; margin: 0"></p>
+        <select
+          id="manufacturer-select"
+          class="select-input"
+          onchange="onManufacturerChange()"
+        ></select>
+        <div
+          id="custom-spoolman"
+          style="display: none; flex-direction: column; gap: 4px"
+        >
+          <div style="display: flex; gap: 8px; align-items: center">
+            <input
+              type="text"
+              id="custom-spoolman-id"
+              class="select-input"
+              placeholder="manufacturer id, e.g. bambulab or Numakers"
+              style="flex: 1; font-size: 1rem"
+              onkeydown="if (event.key === 'Enter') loadSpoolmanCustom();"
+            />
+            <button
+              id="custom-spoolman-btn"
+              class="btn"
+              onclick="loadSpoolmanCustom()"
+            >
+              Load
+            </button>
+          </div>
+          <p style="font-size: 0.75rem; color: #888; margin: 8px 0 0">
+            Find IDs in the
+            <a
+              href="https://github.com/Donkie/SpoolmanDB/tree/main/filaments"
+              target="_blank"
+              rel="noopener"
+              >SpoolmanDB filaments folder</a
+            >
+            (filename without .json).
+          </p>
+        </div>
+        <div
+          id="manufacturer-data-error"
+          class="notification is-danger is-light"
+          style="display: none"
+        ></div>
+        <p
+          id="credits"
+          style="display: none; font-size: 0.85rem; color: #888; margin: 0"
+        ></p>
       </section>
 
-      <section class="config-section" id="section-template" style="display: none">
+      <section
+        class="config-section"
+        id="section-template"
+        style="display: none"
+      >
         <h2 class="section-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20,4V16H4V4H20M20,2H4C2.9,2 2,2.9 2,4V16C2,17.11 2.9,18 4,18H20C21.11,18 22,17.11 22,16V4C22,2.9 21.11,2 20,2M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20,4V16H4V4H20M20,2H4C2.9,2 2,2.9 2,4V16C2,17.11 2.9,18 4,18H20C21.11,18 22,17.11 22,16V4C22,2.9 21.11,2 20,2M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z"
+            />
+          </svg>
           Template
         </h2>
         <div class="template-select-row">
-          <select id="template-select" class="select-input" onchange="onTemplateChange()"></select>
-          <button id="template-info-btn" class="info-btn" onclick="toggleTemplateInfo()" style="display: none" title="How to create a compatible SVG template">
+          <select
+            id="template-select"
+            class="select-input"
+            onchange="onTemplateChange()"
+          ></select>
+          <button
+            id="template-info-btn"
+            class="info-btn"
+            onclick="toggleTemplateInfo()"
+            style="display: none"
+            title="How to create a compatible SVG template"
+          >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"/>
+              <path
+                d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
+              />
             </svg>
           </button>
         </div>
-        <div id="template-instructions" class="notification is-info is-light instructions-panel" style="display: none">
-          <p style="margin: 0 0 8px">Add <code>data-label</code> attributes to the elements you want filled in:</p>
+        <div
+          id="template-instructions"
+          class="notification is-info is-light instructions-panel"
+          style="display: none"
+        >
+          <p style="margin: 0 0 8px">
+            Add <code>data-label</code> attributes to the elements you want
+            filled in:
+          </p>
           <table>
-            <tr><th>data-label</th><th>Injected content</th></tr>
-            <tr><td><code>material</code></td><td>Material name (brackets stripped)</td></tr>
-            <tr><td><code>color</code> or <code>color_badge</code></td><td>Element fill set to the filament color</td></tr>
-            <tr><td><code>color_name</code></td><td>Color name, e.g. <em>Maroon Red</em></td></tr>
-            <tr><td><code>color_code___id</code></td><td>Code and ID, e.g. <em>10205 - A00-R2</em></td></tr>
+            <tr>
+              <th>data-label</th>
+              <th>Injected content</th>
+            </tr>
+            <tr>
+              <td><code>material</code></td>
+              <td>Material name (brackets stripped)</td>
+            </tr>
+            <tr>
+              <td><code>color</code> or <code>color_badge</code></td>
+              <td>Element fill set to the filament color</td>
+            </tr>
+            <tr>
+              <td><code>color_name</code></td>
+              <td>Color name, e.g. <em>Maroon Red</em></td>
+            </tr>
+            <tr>
+              <td><code>color_code___id</code></td>
+              <td>Code and ID, e.g. <em>10205 - A00-R2</em></td>
+            </tr>
           </table>
-          <p style="margin: 8px 0 0">The SVG <code>width</code> and <code>height</code> attributes set the print size (e.g. <code>width="44mm" height="18mm"</code>).</p>
+          <p style="margin: 8px 0 0">
+            The SVG <code>width</code> and <code>height</code> attributes set
+            the print size (e.g. <code>width="44mm" height="18mm"</code>).
+          </p>
         </div>
         <div class="custom-template" id="custom-template" style="display: none">
-          <input type="file" accept=".svg" id="custom-template-input" onchange="onCustomTemplate(event)" />
-          <p style="margin: 0; font-size: 0.75rem; color: #aaa">Your file is never uploaded — everything stays in your browser.</p>
-          <div id="template-warning" class="notification is-warning is-light" style="display: none"></div>
+          <input
+            type="file"
+            accept=".svg"
+            id="custom-template-input"
+            onchange="onCustomTemplate(event)"
+          />
+          <p style="margin: 0; font-size: 0.75rem; color: #aaa">
+            Your file is never uploaded — everything stays in your browser.
+          </p>
+          <div
+            id="template-warning"
+            class="notification is-warning is-light"
+            style="display: none"
+          ></div>
         </div>
-        <img id="label-preview" alt="Label preview" style="max-width: 320px; width: 100%; display: none" />
+        <img
+          id="label-preview"
+          alt="Label preview"
+          style="max-width: 320px; width: 100%; display: none"
+        />
       </section>
 
-      <section class="config-section" id="section-materials" style="display: none">
+      <section
+        class="config-section"
+        id="section-materials"
+        style="display: none"
+      >
         <h2 class="section-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z"
+            />
+          </svg>
           Materials
         </h2>
         <div id="material-select" class="material-checklist"></div>
-        <button class="btn" id="generate-btn" onclick="generate()">Generate Labels</button>
+        <button class="btn" id="generate-btn" onclick="generate()">
+          Generate Labels
+        </button>
       </section>
-
     </div>
 
     <div id="screen-labels">
       <div class="toolbar no-print">
         <div class="toolbar-title-row">
           <button onclick="back()" class="toolbar-back-btn" title="Back">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"
+              />
+            </svg>
           </button>
           <h2 id="toolbar-title"></h2>
         </div>
-        <span id="selection-count" style="display: none; font-size: 0.85rem; color: #555; white-space: nowrap"></span>
-        <button class="btn secondary" id="selection-btn" onclick="toggleSelectionMode()">Selection</button>
+        <span
+          id="selection-count"
+          style="
+            display: none;
+            font-size: 0.85rem;
+            color: #555;
+            white-space: nowrap;
+          "
+        ></span>
+        <button
+          class="btn secondary"
+          id="selection-btn"
+          onclick="toggleSelectionMode()"
+        >
+          Selection
+        </button>
         <button class="btn" onclick="window.print()">Print</button>
       </div>
       <div id="labels-grid"></div>
     </div>
 
+    <script src="./database-parser.js"></script>
     <script src="./generator.js"></script>
     <script src="./app.js"></script>
   </body>

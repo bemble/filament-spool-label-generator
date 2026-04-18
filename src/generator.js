@@ -1,4 +1,5 @@
 const TEMPLATE_FIELDS = [
+  { labels: ["manufacturer"], description: "manufacturer name" },
   { labels: ["material"], description: "material name" },
   { labels: ["color", "color_badge"], description: "color swatch fill" },
   { labels: ["color_name"], description: "color name" },
@@ -24,6 +25,9 @@ function applyTemplateDimensions(svgText) {
 function createLabel(svgTemplate, filament) {
   const doc = new DOMParser().parseFromString(svgTemplate, "image/svg+xml");
   const q = (label) => doc.querySelector(`[data-label="${label}"]`);
+
+  const manufacturerEl = q("manufacturer");
+  if (manufacturerEl) manufacturerEl.textContent = filament.manufacturer;
 
   const material = q("material");
   if (material) material.textContent = filament.material.replace(/\s*[\(\[].*?[\)\]]/g, "").trim();

@@ -167,6 +167,12 @@ body {
   cursor: pointer;
 }
 
+.select-input:disabled {
+  background: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+}
+
 .btn {
   font-size: 1rem;
   padding: 10px 28px;
@@ -426,6 +432,11 @@ body {
 .notification.is-info.is-light {
   background-color: #eff5fb;
   color: #296fa8;
+}
+
+.notification.is-danger.is-light {
+  background-color: #feecf0;
+  color: #cc0f35;
 }
 
 .notification .delete {

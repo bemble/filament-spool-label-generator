@@ -1,4 +1,5 @@
 let MANUFACTURERS = [];
+let SPOOLMAN_DB_CONFIG = null;
 let filaments = [];
 let svgTemplate = "";
 let currentManufacturer = null;
@@ -72,16 +73,82 @@ function onCustomTemplate(event) {
 
 async function onManufacturerChange() {
   const manufacturerId = document.getElementById("manufacturer-select").value;
-  currentManufacturer = MANUFACTURERS.find((b) => b.id === manufacturerId);
-  svgTemplate = "";
-
   const show = (id) => (document.getElementById(id).style.display = "");
   const hide = (id) => (document.getElementById(id).style.display = "none");
+
+  hide("manufacturer-data-error");
+
+  if (manufacturerId === "__spoolman_custom__") {
+    svgTemplate = "";
+    currentManufacturer = null;
+    ["section-template", "section-materials", "credits"].forEach(hide);
+    show("custom-spoolman");
+    return;
+  }
+
+  hide("custom-spoolman");
+  const spoolmanInput = document.getElementById("custom-spoolman-id");
+  const spoolmanBtn = document.getElementById("custom-spoolman-btn");
+  spoolmanInput.disabled = false;
+  spoolmanInput.value = "";
+  spoolmanBtn.textContent = "Load";
+  spoolmanBtn.dataset.mode = "";
+  currentManufacturer = MANUFACTURERS.find((b) => b.id === manufacturerId);
+  svgTemplate = "";
 
   if (!currentManufacturer) {
     ["section-template", "section-materials", "credits"].forEach(hide);
     return;
   }
+
+  await loadManufacturerData();
+}
+
+async function loadSpoolmanCustom() {
+  const input = document.getElementById("custom-spoolman-id");
+  const btn = document.getElementById("custom-spoolman-btn");
+
+  if (btn.dataset.mode === "unload") {
+    input.disabled = false;
+    input.value = "";
+    btn.textContent = "Load";
+    btn.dataset.mode = "";
+    currentManufacturer = null;
+    svgTemplate = "";
+    const hide = (id) => (document.getElementById(id).style.display = "none");
+    ["section-template", "section-materials", "credits", "manufacturer-data-error"].forEach(hide);
+    return;
+  }
+
+  const id = input.value.trim();
+  if (!id) return;
+
+  currentManufacturer = {
+    id,
+    name: id.charAt(0).toUpperCase() + id.slice(1),
+    parser: "spoolman-db",
+    dataUrl: SPOOLMAN_DB_CONFIG.dataUrl.replace("{id}", id),
+    credits: SPOOLMAN_DB_CONFIG.credits,
+    templates: SPOOLMAN_DB_CONFIG.templates || [],
+  };
+  svgTemplate = "";
+
+  const hide = (id) => (document.getElementById(id).style.display = "none");
+  ["section-template", "section-materials", "manufacturer-data-error"].forEach(hide);
+
+  const ok = await loadManufacturerData();
+  if (ok) {
+    input.disabled = true;
+    btn.textContent = "Unload";
+    btn.dataset.mode = "unload";
+  }
+}
+
+async function loadManufacturerData() {
+  const show = (id) => (document.getElementById(id).style.display = "");
+  const hide = (id) => (document.getElementById(id).style.display = "none");
+
+  ["section-template", "section-materials"].forEach(hide);
 
   const templateSelect = document.getElementById("template-select");
   templateSelect.innerHTML = "";
@@ -102,6 +169,14 @@ async function onManufacturerChange() {
   customGroup.appendChild(customOpt);
   templateSelect.appendChild(customGroup);
 
+  const res = await fetch(currentManufacturer.dataUrl);
+  if (!res.ok) {
+    const err = document.getElementById("manufacturer-data-error");
+    err.innerHTML = `<button class="delete" onclick="this.parentElement.style.display='none'"></button>Failed to load data for "<strong>${currentManufacturer.id}</strong>". URL: <a href="${currentManufacturer.dataUrl}" target="_blank" rel="noopener">${currentManufacturer.dataUrl}</a>`;
+    show("manufacturer-data-error");
+    return false;
+  }
+
   hide("template-info-btn");
   hide("custom-template");
   hide("template-instructions");
@@ -112,8 +187,6 @@ async function onManufacturerChange() {
   const credits = document.getElementById("credits");
   credits.innerHTML = `Filament database by <a href="${currentManufacturer.credits.url}" target="_blank" rel="noopener">${currentManufacturer.credits.label}</a> — thanks!`;
   show("credits");
-
-  const res = await fetch(currentManufacturer.dataUrl);
   filaments = parseDatabase(currentManufacturer.parser, await res.json()).map((f) => ({
     ...f,
     manufacturer: currentManufacturer.name,
@@ -138,12 +211,14 @@ async function onManufacturerChange() {
   buildMaterialChecklist(document.getElementById("material-select"), groups, sortedGroups, counts);
   updateGenerateBtn();
   show("section-materials");
+  return true;
 }
 
 async function init() {
   const list = await fetch("./list.json").then((r) => r.json());
 
   const spoolmanDb = list["spoolman-db"];
+  SPOOLMAN_DB_CONFIG = spoolmanDb;
   const spoolmanManufacturers = (spoolmanDb?.manufacturers_enabled || []).map((entry) => {
     const id = typeof entry === "string" ? entry : entry.id;
     const name = typeof entry === "string" ? entry.charAt(0).toUpperCase() + entry.slice(1) : entry.name;
@@ -178,6 +253,15 @@ async function init() {
     opt.value = manufacturer.id;
     opt.textContent = manufacturer.name;
     manufacturerSelect.appendChild(opt);
+  }
+  if (spoolmanDb) {
+    const otherGroup = document.createElement("optgroup");
+    otherGroup.label = "More";
+    const otherOpt = document.createElement("option");
+    otherOpt.value = "__spoolman_custom__";
+    otherOpt.textContent = "Other from Spoolman DB…";
+    otherGroup.appendChild(otherOpt);
+    manufacturerSelect.appendChild(otherGroup);
   }
 
   document.getElementById("loading").style.display = "none";
